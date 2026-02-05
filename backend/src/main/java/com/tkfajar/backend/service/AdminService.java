@@ -2,7 +2,7 @@ package com.tkfajar.backend.service;
 
 import com.tkfajar.backend.dto.AdminLoginRequest;
 import com.tkfajar.backend.model.Admin;
-import com.tkfajar.backend.repository.AdminMongoRepository;
+import com.tkfajar.backend.repository.AdminRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,13 +16,13 @@ import java.util.UUID;
 @Service
 public class AdminService {
     
-    private final AdminMongoRepository adminRepository;
+    private final AdminRepository adminRepository;
     private final Map<String, Admin> activeSessions = new HashMap<>();
     private final Map<String, LocalDateTime> sessionExpiry = new HashMap<>();
     private static final long SESSION_TIMEOUT_MINUTES = 20;
     
     @Autowired
-    public AdminService(AdminMongoRepository adminRepository) {
+    public AdminService(AdminRepository adminRepository) {
         this.adminRepository = adminRepository;
         initializeDefaultAdmin();
     }

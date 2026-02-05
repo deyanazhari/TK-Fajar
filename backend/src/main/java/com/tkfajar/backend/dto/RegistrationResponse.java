@@ -12,9 +12,22 @@ public class RegistrationResponse {
     private String alamat;
     private LocalDate tanggalLahir;
     private LocalDateTime createdAt;
+    private boolean success;
     private String message;
     
+    public RegistrationResponse() {
+    }
+    
+    public boolean isSuccess() {
+        return success;
+    }
+    
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
+    
     public RegistrationResponse(Long id, String parentName, String childName, String whatsapp, String alamat, LocalDate tanggalLahir, LocalDateTime createdAt, String message) {
+        this.success = true;
         this.id = id;
         this.parentName = parentName;
         this.childName = childName;

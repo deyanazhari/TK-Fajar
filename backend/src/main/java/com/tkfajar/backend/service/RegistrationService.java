@@ -3,7 +3,7 @@ package com.tkfajar.backend.service;
 import com.tkfajar.backend.dto.RegistrationRequest;
 import com.tkfajar.backend.dto.RegistrationResponse;
 import com.tkfajar.backend.model.Registration;
-import com.tkfajar.backend.repository.RegistrationMongoRepository;
+import com.tkfajar.backend.repository.RegistrationRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -14,9 +14,9 @@ import java.util.Optional;
 @Service
 public class RegistrationService {
     
-    private final RegistrationMongoRepository registrationRepository;
+    private final RegistrationRepository registrationRepository;
     
-    public RegistrationService(RegistrationMongoRepository registrationRepository) {
+    public RegistrationService(RegistrationRepository registrationRepository) {
         this.registrationRepository = registrationRepository;
     }
     

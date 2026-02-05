@@ -13,16 +13,17 @@ project/
 │   │   └── utils/       # Utility functions
 │   ├── package.json
 │   └── tailwind.config.js
-└── backend/           # Spring Boot application
+└── backend/           # Spring Boot application with SQLite
     ├── src/main/java/com/tkfajar/backend/
     │   ├── controller/   # REST controllers
     │   ├── service/      # Business logic
     │   ├── model/        # Entity models
     │   ├── dto/          # Data transfer objects
-    │   ├── repository/   # JPA repositories
+    │   ├── repository/   # JPA repositories for SQLite
     │   └── config/       # Configuration classes
     ├── build.gradle
-    └── application.properties
+    ├── application.properties
+    └── tk_fajar.db     # SQLite database file (auto-created)
 ```
 
 ## Prerequisites
@@ -118,16 +119,17 @@ The application uses MongoDB for data persistence. You have two options:
 2. Create a cluster and database user
 3. Update `application.properties` with your Atlas connection string
 
-For detailed setup instructions, see [MONGODB_SETUP.md](MONGODB_SETUP.md)
+For detailed setup instructions, see [SQLITE_SETUP.md](SQLITE_SETUP.md)
 
 ### Database Details
-- Database name: `tk_fajar`
-- Collection name: `registrations`
-- Fields: `parent_name`, `child_name`, `whatsapp`, `created_at`
-- Unique index on `whatsapp` field
+- **Database File**: `tk_fajar.db` (SQLite)
+- **Tables**: `admins`, `registrations`
+- **Admin Fields**: `id`, `username`, `password`, `role`, `active`, `created_at`, `last_login`
+- **Registration Fields**: `id`, `parent_name`, `child_name`, `whatsapp`, `tanggal_lahir`, `alamat`, `created_at`
+- **Indexes**: Unique constraint on `whatsapp` field
 
 ### Viewing Data
-Use MongoDB Compass or the MongoDB shell to view the stored registration data.
+Use SQLite Browser, DB Browser for SQLite, or command line to view the stored registration data.
 
 ## Development
 
