@@ -13,12 +13,22 @@ const api = axios.create({
 // Check if backend is available
 export const checkBackendHealth = async () => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/health`, { timeout: 3000 });
+    const response = await axios.get(`${API_BASE_URL}/registration/health`, { timeout: 3000 });
     return response.data;
   } catch (error) {
     throw error;
   }
 };
+
+// Health check at root level (new endpoint)
+export const checkRootHealth = async () => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/`, { timeout: 3000 });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};;
 
 export const submitRegistration = async (formData) => {
   try {

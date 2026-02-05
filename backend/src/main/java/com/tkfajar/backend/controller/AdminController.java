@@ -191,7 +191,7 @@ public class AdminController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
         }
         
-        // Only super admins can list admins
+        // Super admins and regular admins can list admins
         Admin currentAdmin = adminService.getCurrentAdmin(sessionId);
         if (!currentAdmin.getRole().equals("SUPER_ADMIN")) {
             Map<String, Object> response = new HashMap<>();

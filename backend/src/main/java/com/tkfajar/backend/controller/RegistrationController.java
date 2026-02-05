@@ -56,4 +56,9 @@ public class RegistrationController {
     public ResponseEntity<Map<String, String>> health() {
         return ResponseEntity.ok(Map.of("status", "OK", "message", "TK Fajar API is running"));
     }
+    
+    @GetMapping("/")
+    public ResponseEntity<Map<String, String>> rootHealth() {
+        return ResponseEntity.ok(Map.of("status", "OK", "message", "TK Fajar Backend - System Ready", "timestamp", java.time.LocalDateTime.now().toString()));
+    }
 }

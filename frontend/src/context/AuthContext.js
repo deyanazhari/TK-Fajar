@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }) => {
       const checkSession = async () => {
         try {
           // First check if backend is available
-          await checkBackendHealth();
+          await checkRootHealth();
           
           const response = await fetch('http://localhost:8080/api/admin/check-session', {
             headers: {

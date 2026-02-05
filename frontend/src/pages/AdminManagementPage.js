@@ -356,7 +356,7 @@ const AdminManagementPage = () => {
                       <tr key={admin.id} className="hover:bg-gray-50">
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm font-medium text-gray-900">{admin.username}</div>
-                          <div className="text-xs text-gray-500">ID: {admin.id.substring(0, 8)}...</div>
+                           <div className="text-xs text-gray-500">ID: {String(admin.id).substring(0, 8)}...</div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           {getRoleBadge(admin.role)}
