@@ -42,7 +42,7 @@ const Navbar = () => {
               onClick={() => navigate('/admin/login')}
               className="ml-3 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full font-bold shadow-lg transition transform hover:scale-105 inline-block text-sm"
             >
-              📊 Data
+              📊 Admin
             </button>
           </div>
         </div>

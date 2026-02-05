@@ -18,4 +18,41 @@ export const submitRegistration = async (formData) => {
   }
 };
 
+export const getRegistrations = async () => {
+  try {
+    const sessionId = localStorage.getItem('adminSessionId');
+    const response = await api.get('/registration', {
+      headers: {
+        'X-Session-ID': sessionId
+      }
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const adminLogin = async (credentials) => {
+  try {
+    const response = await api.post('/admin/login', credentials);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const adminLogout = async () => {
+  try {
+    const sessionId = localStorage.getItem('adminSessionId');
+    const response = await api.post('/admin/logout', {}, {
+      headers: {
+        'X-Session-ID': sessionId
+      }
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export default api;
