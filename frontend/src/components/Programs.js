@@ -26,7 +26,7 @@ const Programs = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
-            <h3 className="text-xl font-bold text-gray-800 mb-4">Lingkungan Ceria</h3>
+            <h3 className="text-xl font-bold text-gray-800 mb-4">Lingkungan Fajar</h3>
             <p className="text-gray-600 leading-relaxed">Area bermain yang luas, aman, dan penuh warna untuk merangsang kreativitas serta kebahagiaan anak.</p>
           </div>
           
