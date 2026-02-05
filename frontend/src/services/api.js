@@ -7,7 +7,18 @@ const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  timeout: 10000, // 10 second timeout
 });
+
+// Check if backend is available
+export const checkBackendHealth = async () => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/health`, { timeout: 3000 });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
 
 export const submitRegistration = async (formData) => {
   try {
@@ -44,14 +55,21 @@ export const adminLogin = async (credentials) => {
 export const adminLogout = async () => {
   try {
     const sessionId = localStorage.getItem('adminSessionId');
+    if (!sessionId) {
+      return { success: true, message: "No active session" };
+    }
+    
     const response = await api.post('/admin/logout', {}, {
       headers: {
         'X-Session-ID': sessionId
-      }
+      },
+      timeout: 5000 // 5 second timeout
     });
     return response.data;
   } catch (error) {
-    throw error;
+    // Don't throw error for logout - return success so frontend can clean up
+    console.warn('Logout API call failed:', error);
+    return { success: true, message: "Local logout completed" };
   }
 };
 
