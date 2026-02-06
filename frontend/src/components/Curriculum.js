@@ -1,5 +1,5 @@
 import React from 'react';
-
+import CurriculumAssets from '../assets/WhatsApp Image 2025-03-15 at 14.58.59.jpeg';
 const Curriculum = () => {
   return (
     <section className="py-20 bg-white">
@@ -7,7 +7,7 @@ const Curriculum = () => {
         <div className="flex flex-col lg:flex-row items-center gap-16">
           <div className="lg:w-1/2 order-2 lg:order-1">
             <img 
-              src="https://images.unsplash.com/photo-1516627145497-ae6968895b74?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
+              src={CurriculumAssets} 
               alt="Aktivitas Belajar" 
               className="rounded-3xl shadow-2xl"
               onError={(e) => e.target.src = 'https://via.placeholder.com/600x400?text=Aktivitas+TK'}

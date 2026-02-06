@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ site.title | default: "TK Fajar" }}</title>
+    <meta name="description" content="{{ site.description | default: "TK Fajar adalah tempat terbaik bagi buah hati Anda untuk bertumbuh, belajar, dan bermain dengan kurikulum yang menyenangkan serta lingkungan yang aman." }}">
+    <meta name="author" content="{{ site.author | default: "TK Fajar" }}">
+    
+    <!-- SEO Meta Tags -->
+    <meta property="og:title" content="{{ site.title | default: "TK Fajar" }}">
+    <meta property="og:description" content="{{ site.description | default: "TK Fajar adalah tempat terbaik bagi buah hati Anda untuk bertumbuh, belajar, dan bermain dengan kurikulum yang menyenangkan serta lingkungan yang aman." }}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ site.url }}{{ site.baseurl }}{{ page.url }}">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ site.title | default: "TK Fajar" }}">
+    <meta name="twitter:description" content="{{ site.description | default: "TK Fajar adalah tempat terbaik bagi buah hati Anda untuk bertumbuh, belajar, dan bermain dengan kurikulum yang menyenangkan serta lingkungan yang aman." }}">
+    
+    <!-- Base URL and Assets -->
+    <base href="{{ site.baseurl }}/">
+    
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{{ '/favicon.ico' | relative_url }}">
+    
+    <!-- Styles -->
+    {% if page.css %}
+    <link rel="stylesheet" href="{{ '/assets/css/' | append: page.css | relative_url }}">
+    {% else %}
+    <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+    {% endif %}
+    
+    <!-- Inline critical CSS for better performance -->
+    <style>
+      /* Critical rendering path CSS */
+      body { margin: 0; font-family: 'Inter', sans-serif; }
+      #root { min-height: 100vh; }
+      .loading { display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+    </style>
+  </head>
+  <body class="bg-blue-50 text-gray-800">
+    <div id="root">
+      {% if content %}
+        {{ content }}
+      {% else %}
+        <!-- React app will be mounted here -->
+      {% endif %}
+    </div>
+    
+    <!-- Scripts -->
+    <script>
+      // GitHub Pages base URL configuration
+      window.BASE_URL = '{{ site.baseurl }}';
+      window.PUBLIC_URL = '{{ site.baseurl }}';
+    </script>
+    
+    {% if page.js %}
+    <script src="{{ '/assets/js/' | append: page.js | relative_url }}"></script>
+    {% else %}
+    <script src="{{ '/static/js/bundle.js' | relative_url }}"></script>
+    {% endif %}
+    
+    <!-- Analytics (if needed) -->
+    {% if site.google_analytics %}
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.google_analytics }}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '{{ site.google_analytics }}');
+    </script>
+    {% endif %}
+  </body>
+</html>

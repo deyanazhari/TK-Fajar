@@ -1,0 +1,72 @@
+# Site settings
+title: TK Fajar - Tempat Belajar & Bermain Terbaik
+description: TK Fajar adalah tempat terbaik bagi buah hati Anda untuk bertumbuh, belajar, dan bermain dengan kurikulum yang menyenangkan serta lingkungan yang aman.
+baseurl: "/TK-Fajar"
+url: "https://deyanazhari.github.io"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+theme: minima
+
+# Exclude files from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+  - .git
+  - .github
+  - src
+  - public
+  - package.json
+  - package-lock.json
+  - README.md
+  - DEPLOYMENT.md
+
+# Include files
+include:
+  - _config.yml
+
+# Sass configuration
+sass:
+  sass_dir: _sass
+  style: compressed
+
+# Plugins
+plugins:
+  - jekyll-sitemap
+  - jekyll-feed
+  - jekyll-seo-tag
+
+# Collections
+collections:
+  posts:
+    output: true
+    permalink: /:categories/:year/:month/:day/:title/
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+
+# Set minimal settings for SPA
+permalink: pretty
+
+# Compression
+compress_html:
+  clippings: all
+  comments: all
+  endings: all
+  startings: []
+  blanklines: false
+  profile: false
+
+# Liquid
+liquid:
+  error_mode: warn
+  strict_filters: false
+  strict_variables: false
