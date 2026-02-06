@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/TK-Fajar/static/css/main.a625a7bd.css",
+    "main.js": "/TK-Fajar/static/js/main.6639ffbb.js",
+    "static/media/WhatsApp Image 2025-03-15 at 14.58.59.jpeg": "/TK-Fajar/static/media/WhatsApp Image 2025-03-15 at 14.58.59.6e84a58ee12fb79e7b83.jpeg",
+    "index.html": "/TK-Fajar/index.html",
+    "main.a625a7bd.css.map": "/TK-Fajar/static/css/main.a625a7bd.css.map",
+    "main.6639ffbb.js.map": "/TK-Fajar/static/js/main.6639ffbb.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a625a7bd.css",
+    "static/js/main.6639ffbb.js"
+  ]
+}
