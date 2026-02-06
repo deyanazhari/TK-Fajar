@@ -10,6 +10,7 @@ import Curriculum from './components/Curriculum';
 import Testimonial from './components/Testimonial';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import Chatbot from './components/Chatbot';
 import RegistrationPage from './pages/RegistrationPage';
 import RegistrationDataPage from './pages/RegistrationDataPage';
 import ChangePasswordPage from './pages/ChangePasswordPage';
@@ -42,6 +43,7 @@ function App() {
               </div>
               <Contact />
               <Footer />
+              <Chatbot />
             </div>
           } />
           <Route path="/kegiatan" element={<KegiatanPage />} />

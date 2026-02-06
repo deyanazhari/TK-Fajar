@@ -36,7 +36,7 @@ public class RegistrationController {
         } catch (RuntimeException e) {
             System.err.println("Error submitting registration: " + e.getMessage());
             RegistrationResponse errorResponse = new RegistrationResponse(
-                null, null, null, null, null, null, null, e.getMessage()
+                null, null, null, null, null, null, null,null,null,null,null,e.getMessage()
             );
             return ResponseEntity.badRequest().body(errorResponse);
         }
@@ -53,6 +53,22 @@ public class RegistrationController {
         return registrationService.getRegistrationById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+    
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Map<String, Object>> deleteRegistration(@PathVariable Long id) {
+        boolean deleted = registrationService.deleteRegistration(id);
+        if (deleted) {
+            return ResponseEntity.ok(Map.of("success", true, "message", "Data pendaftaran berhasil dihapus"));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    
+    @DeleteMapping
+    public ResponseEntity<Map<String, Object>> deleteAllRegistrations() {
+        registrationService.deleteAllRegistrations();
+        return ResponseEntity.ok(Map.of("success", true, "message", "Semua data pendaftaran berhasil dihapus"));
     }
     
     @GetMapping("/health")

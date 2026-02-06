@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/common/Navbar';
 import Footer from '../components/Footer';
-import { getRegistrations } from '../services/api';
+import { getRegistrations, deleteRegistration, deleteAllRegistrations } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 
 const RegistrationDataPage = () => {
@@ -38,19 +38,62 @@ const RegistrationDataPage = () => {
     (reg.alamat && reg.alamat.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
-  const formatDate = (dateString) => {
-    if (!dateString) return 'N/A';
-    return new Date(dateString).toLocaleString('id-ID', {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    });
-  };
+  // const formatDate = (dateString) => {
+  //   if (!dateString) return 'N/A';
+  //   return new Date(dateString).toLocaleString('id-ID', {
+  //     day: 'numeric',
+  //     month: 'long',
+  //     year: 'numeric',
+  //     hour: '2-digit',
+  //     minute: '2-digit'
+  //   });
+  // };
+function formatToYYYYMMDD(value) {
+  let parts;
+
+  if (Array.isArray(value)) {
+    parts = value;
+  } else if (typeof value === "string") {
+    parts = value.split(",").map(Number);
+  } else {
+    throw new Error("Unsupported value type");
+  }
+
+  const [year, month, day] = parts;
+
+  const date = new Date(Date.UTC(year, month - 1, day));
+
+  return date.toISOString().slice(0, 10);
+}
+// → 2026-02-05
+
 
   const formatWhatsApp = (whatsapp) => {
     return `+62 ${whatsapp}`;
+  };
+
+  const handleDeleteRegistration = async (id, parentName) => {
+    if (window.confirm(`Apakah Anda yakin ingin menghapus data pendaftaran atas nama ${parentName}?`)) {
+      try {
+        await deleteRegistration(id);
+        fetchRegistrations();
+      } catch (error) {
+        console.error('Error deleting registration:', error);
+        alert('Gagal menghapus data. Silakan coba lagi.');
+      }
+    }
+  };
+
+  const handleDeleteAllRegistrations = async () => {
+    if (window.confirm(`Apakah Anda yakin ingin menghapus SEMUA data pendaftaran (${registrations.length} data)?\n\nTindakan ini tidak dapat dibatalkan!`)) {
+      try {
+        await deleteAllRegistrations();
+        fetchRegistrations();
+      } catch (error) {
+        console.error('Error deleting all registrations:', error);
+        alert('Gagal menghapus semua data. Silakan coba lagi.');
+      }
+    }
   };
 
   return (
@@ -115,29 +158,40 @@ const RegistrationDataPage = () => {
                   />
                 </div>
               </div>
-              <div className="flex gap-3">
-                <button
-                  onClick={fetchRegistrations}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-bold transition flex items-center gap-2"
-                >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
-                  </svg>
-                  Refresh Data
-                </button>
-                <button
-                  onClick={() => navigate('/')}
-                  className="border-2 border-gray-300 text-gray-700 hover:bg-gray-50 px-6 py-3 rounded-xl font-bold transition"
-                >
-                  Kembali ke Beranda
-                </button>
-                <button
-                  onClick={() => navigate('/admin')}
-                  className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-xl font-bold transition"
-                >
-                  📊 Dashboard
-                </button>
-              </div>
+               <div className="flex gap-3">
+                 <button
+                   onClick={fetchRegistrations}
+                   className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-bold transition flex items-center gap-2"
+                 >
+                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                   </svg>
+                   Refresh Data
+                 </button>
+                 <button
+                   onClick={() => navigate('/')}
+                   className="border-2 border-gray-300 text-gray-700 hover:bg-gray-50 px-6 py-3 rounded-xl font-bold transition"
+                 >
+                   Kembali ke Beranda
+                 </button>
+                 <button
+                   onClick={() => navigate('/admin')}
+                   className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-xl font-bold transition"
+                 >
+                   📊 Dashboard
+                 </button>
+                 {registrations.length > 0 && (
+                   <button
+                     onClick={handleDeleteAllRegistrations}
+                     className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-xl font-bold transition flex items-center gap-2"
+                   >
+                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                     </svg>
+                     Hapus Semua
+                   </button>
+                 )}
+               </div>
             </div>
           </div>
 
@@ -225,7 +279,7 @@ const RegistrationDataPage = () => {
               </p>
             </div>
           ) : (
-            <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+            <div className="bg-white rounded-3xl shadow-lg overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead className="bg-blue-600 text-white">
@@ -233,11 +287,16 @@ const RegistrationDataPage = () => {
                       <th className="px-6 py-4 text-left font-semibold">No</th>
                       <th className="px-6 py-4 text-left font-semibold">Nama Orang Tua</th>
                       <th className="px-6 py-4 text-left font-semibold">Nama Anak</th>
-                      <th className="px-6 py-4 text-left font-semibold">Tanggal Lahir</th>
+                      <th className="px-6 py-4 text-left font-semibold">Tempat & Tanggal Lahir</th>
                       <th className="px-6 py-4 text-left font-semibold">Alamat</th>
                       <th className="px-6 py-4 text-left font-semibold">WhatsApp</th>
-                      <th className="px-6 py-4 text-left font-semibold">Tanggal Daftar</th>
-                      <th className="px-6 py-4 text-left font-semibold">ID Pendaftaran</th>
+                      
+                      <th className="px-6 py-4 text-left font-semibold">Email</th>
+                      <th className="px-6 py-4 text-left font-semibold">Jenis Kelamin</th>
+                      <th className="px-6 py-4 text-left font-semibold">Agama</th>
+                       <th className="px-6 py-4 text-left font-semibold">Tanggal Daftar</th>
+                       <th className="px-6 py-4 text-left font-semibold">Aksi</th>
+                      
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200">
@@ -246,8 +305,8 @@ const RegistrationDataPage = () => {
                         <td className="px-6 py-4 text-gray-700 font-medium">{index + 1}</td>
                         <td className="px-6 py-4 text-gray-900 font-semibold">{registration.parentName}</td>
                         <td className="px-6 py-4 text-gray-700">{registration.childName}</td>
-                        <td className="px-6 py-4 text-gray-600 text-sm">
-                          {registration.tanggalLahir ? new Date(registration.tanggalLahir).toLocaleDateString('id-ID') : 'N/A'}
+                        <td className="px-6 py-4 text-gray-600 text-sm max-w-xs truncate">
+                        {registration.tempatLahir} , {registration.tanggalLahir ? new Date(registration.tanggalLahir).toLocaleDateString('id-ID') : 'N/A'}
                         </td>
                         <td className="px-6 py-4 text-gray-600 text-sm max-w-xs truncate" title={registration.alamat}>
                           {registration.alamat || 'N/A'}
@@ -257,17 +316,29 @@ const RegistrationDataPage = () => {
                             <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
                             </svg>
-                            <span className="text-gray-700 font-medium">{formatWhatsApp(registration.whatsapp)}</span>
+                            <span className="text-gray-700 font-medium max-w-xs truncate">{formatWhatsApp(registration.whatsapp)}</span>
                           </div>
                         </td>
                         
-                        <td className="px-6 py-4 text-gray-600 text-sm">{formatDate(registration.createdAt)}</td>
+                        
                         <td className="px-6 py-4">
-                          <code className="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">
-                            {String(registration.id).substring(0, 8)}...
-                          </code>
+                          {registration.email}
                         </td>
-                      </tr>
+                        <td className="px-6 py-4 text-gray-700">{registration.jenisKelamin}</td>
+                        <td className="px-6 py-4 text-gray-700">{registration.agama}</td>
+                         <td className="px-6 py-4 text-gray-600 text-sm">{formatToYYYYMMDD(registration.createdAt)}</td>
+                         <td className="px-6 py-4">
+                           <button
+                             onClick={() => handleDeleteRegistration(registration.id, registration.parentName)}
+                             className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg text-sm font-medium transition flex items-center gap-1"
+                           >
+                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                             </svg>
+                             Hapus
+                           </button>
+                         </td>
+                       </tr>
                     ))}
                   </tbody>
                 </table>

@@ -33,6 +33,10 @@ public class RegistrationService {
         registration.setAlamat(request.getAlamat());
         registration.setTanggalLahir(request.getTanggalLahir());
         registration.setCreatedAt(LocalDateTime.now());
+        registration.setEmail(request.getEmail());
+        registration.setAgama(request.getAgama());
+        registration.setJenisKelamin(request.getJenisKelamin());
+        registration.setTempatLahir(request.getTempatLahir());
         
         Registration savedRegistration = registrationRepository.save(registration);
         
@@ -44,6 +48,10 @@ public class RegistrationService {
             savedRegistration.getAlamat(),
             savedRegistration.getTanggalLahir(),
             savedRegistration.getCreatedAt(),
+            savedRegistration.getEmail(),
+            savedRegistration.getAgama(),
+            savedRegistration.getTempatLahir(),
+            savedRegistration.getJenisKelamin(),
             "Pendaftaran berhasil! Kami akan segera menghubungi Anda."
         );
     }
@@ -58,5 +66,17 @@ public class RegistrationService {
     
     public Optional<Registration> getRegistrationByWhatsapp(String whatsapp) {
         return registrationRepository.findByWhatsapp(whatsapp);
+    }
+    
+    public boolean deleteRegistration(Long id) {
+        if (registrationRepository.existsById(id)) {
+            registrationRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
+    
+    public void deleteAllRegistrations() {
+        registrationRepository.deleteAll();
     }
 }

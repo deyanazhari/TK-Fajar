@@ -53,7 +53,7 @@ public class AdminService {
                 admin.setLastLogin(LocalDateTime.now());
                 adminRepository.save(admin);
                 activeSessions.put(sessionId, admin);
-                sessionExpiry.put(sessionId, LocalDateTime.now().plusMinutes(SESSION_TIMEOUT_MINUTES));
+                sessionExpiry.put(sessionId, LocalDateTime.now().plusMinutes(SESSION_TIMEOUT_MINUTES*60));
                 return sessionId;
             }
         }

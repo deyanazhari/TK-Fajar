@@ -33,20 +33,33 @@ public class Registration {
     
     @NotNull(message = "Tanggal lahir anak wajib diisi")
     private LocalDate tanggalLahir;
+
+    @NotNull(message = "Email wajib diisi")
+    private String email;
     
     @CreationTimestamp
     private LocalDateTime createdAt;
+    @NotNull(message = "Agama wajib dipilih")
+    private String agama;
+    @NotNull(message = "Tempat Lahir wajib diisi")
+    private String tempatLahir;
+    @NotNull(message = "Jenis Kelamin wajib dipilih")
+    private String jenisKelamin;
     
     public Registration() {
     }
     
-    public Registration(String parentName, String childName, String whatsapp, String alamat, LocalDate tanggalLahir) {
+    public Registration(String parentName, String childName, String whatsapp, String alamat, LocalDate tanggalLahir, String email,String tempatLahir, String jenisKelamin, String agama) {
         this.parentName = parentName;
         this.childName = childName;
         this.whatsapp = whatsapp;
         this.alamat = alamat;
         this.tanggalLahir = tanggalLahir;
         this.createdAt = LocalDateTime.now();
+        this.email = email;
+        this.tempatLahir = tempatLahir;
+        this.jenisKelamin = jenisKelamin;
+        this.agama = agama;
     }
 
     public Long getId() {
@@ -103,5 +116,37 @@ public class Registration {
     
     public void setTanggalLahir(LocalDate tanggalLahir) {
         this.tanggalLahir = tanggalLahir;
+    }
+
+    public @NotNull(message = "Email wajib diisi") String getEmail() {
+        return email;
+    }
+
+    public void setEmail(@NotNull(message = "Email wajib diisi") String email) {
+        this.email = email;
+    }
+
+    public @NotNull(message = "Agama wajib dipilih") String getAgama() {
+        return agama;
+    }
+
+    public void setAgama(@NotNull(message = "Agama wajib dipilih") String agama) {
+        this.agama = agama;
+    }
+
+    public @NotNull(message = "Tempat Lahir wajib diisi") String getTempatLahir() {
+        return tempatLahir;
+    }
+
+    public void setTempatLahir(@NotNull(message = "Tempat Lahir wajib diisi") String tempatLahir) {
+        this.tempatLahir = tempatLahir;
+    }
+
+    public @NotNull(message = "Jenis Kelamin wajib dipilih") String getJenisKelamin() {
+        return jenisKelamin;
+    }
+
+    public void setJenisKelamin(@NotNull(message = "Jenis Kelamin wajib dipilih") String jenisKelamin) {
+        this.jenisKelamin = jenisKelamin;
     }
 }

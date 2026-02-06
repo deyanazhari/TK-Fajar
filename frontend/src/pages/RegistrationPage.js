@@ -9,9 +9,13 @@ const RegistrationPage = () => {
   const [formData, setFormData] = useState({
     parentName: '',
     childName: '',
+    jenisKelamin: '',
+    tempatLahir: '',
+    tanggalLahir: '',
+    agama: '',
     whatsapp: '',
-    alamat: '',
-    tanggalLahir: ''
+    email: '',
+    alamat: ''
   });
   const [showSuccess, setShowSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -44,18 +48,36 @@ const RegistrationPage = () => {
       newErrors.childName = 'Nama anak wajib diisi';
     }
     
+    if (!formData.jenisKelamin) {
+      newErrors.jenisKelamin = 'Jenis kelamin anak wajib dipilih';
+    }
+    
+    if (!formData.tempatLahir.trim()) {
+      newErrors.tempatLahir = 'Tempat lahir wajib diisi';
+    }
+    
+    if (!formData.tanggalLahir) {
+      newErrors.tanggalLahir = 'Tanggal lahir anak wajib diisi';
+    }
+    
+    if (!formData.agama) {
+      newErrors.agama = 'Agama wajib dipilih';
+    }
+    
     if (!formData.whatsapp.trim()) {
       newErrors.whatsapp = 'Nomor WhatsApp wajib diisi';
     } else if (!/^[0-9]{10,13}$/.test(formData.whatsapp)) {
       newErrors.whatsapp = 'Format nomor WhatsApp tidak valid (10-13 digit angka)';
     }
     
-    if (!formData.alamat.trim()) {
-      newErrors.alamat = 'Alamat wajib diisi';
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email orang tua wajib diisi';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = 'Format email tidak valid';
     }
     
-    if (!formData.tanggalLahir) {
-      newErrors.tanggalLahir = 'Tanggal lahir anak wajib diisi';
+    if (!formData.alamat.trim()) {
+      newErrors.alamat = 'Alamat wajib diisi';
     }
     
     setErrors(newErrors);
@@ -74,7 +96,7 @@ const RegistrationPage = () => {
     try {
       await submitRegistration(formData);
       setShowSuccess(true);
-      setFormData({ parentName: '', childName: '', whatsapp: '', alamat: '', tanggalLahir: '' });
+      setFormData({ parentName: '', childName: '', jenisKelamin: '', tempatLahir: '', tanggalLahir: '', agama: '', whatsapp: '', email: '', alamat: '' });
       setErrors({});
     } catch (error) {
       console.error('Error submitting form:', error);
@@ -112,7 +134,7 @@ const RegistrationPage = () => {
               <button
                 onClick={() => {
                   setShowSuccess(false);
-                  setFormData({ parentName: '', childName: '', whatsapp: '', alamat: '', tanggalLahir: '' });
+                  setFormData({ parentName: '', childName: '', jenisKelamin: '', tempatLahir: '', tanggalLahir: '', agama: '', whatsapp: '', email: '', alamat: '' });
                 }}
                 className="w-full border border-blue-600 text-blue-600 hover:bg-blue-50 font-bold py-3 rounded-xl transition"
               >
@@ -192,6 +214,135 @@ const RegistrationPage = () => {
 
               <div>
                 <label className="block text-gray-700 font-bold mb-2">
+                  Jenis Kelamin Anak <span className="text-red-500">*</span>
+                </label>
+                <div className="flex gap-4">
+                  <label className="flex items-center cursor-pointer bg-gray-50 px-4 py-3 rounded-xl border border-gray-200 hover:bg-blue-50 transition-colors flex-1">
+                    <input
+                      type="radio"
+                      name="jenisKelamin"
+                      value="Laki-laki"
+                      checked={formData.jenisKelamin === 'Laki-laki'}
+                      onChange={handleChange}
+                      className="w-4 h-4 text-blue-600 focus:ring-blue-500"
+                    />
+                    <span className="ml-2 text-gray-700 flex items-center">
+                      <svg className="w-5 h-5 mr-1 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+                      </svg>
+                      Laki-laki
+                    </span>
+                  </label>
+                  <label className="flex items-center cursor-pointer bg-gray-50 px-4 py-3 rounded-xl border border-gray-200 hover:bg-pink-50 transition-colors flex-1">
+                    <input
+                      type="radio"
+                      name="jenisKelamin"
+                      value="Perempuan"
+                      checked={formData.jenisKelamin === 'Perempuan'}
+                      onChange={handleChange}
+                      className="w-4 h-4 text-pink-600 focus:ring-pink-500"
+                    />
+                    <span className="ml-2 text-gray-700 flex items-center">
+                      <svg className="w-5 h-5 mr-1 text-pink-500" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+                      </svg>
+                      Perempuan
+                    </span>
+                  </label>
+                </div>
+                {errors.jenisKelamin && (
+                  <p className="text-red-500 text-sm mt-1">{errors.jenisKelamin}</p>
+                )}
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-gray-700 font-bold mb-2">
+                    Tempat Lahir <span className="text-red-500">*</span>
+                  </label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                      </svg>
+                    </div>
+                    <input 
+                      type="text" 
+                      name="tempatLahir"
+                      placeholder="Kota/Kabupaten" 
+                      value={formData.tempatLahir}
+                      onChange={handleChange}
+                      className={`w-full pl-12 pr-4 py-3 rounded-xl bg-gray-50 border ${errors.tempatLahir ? 'border-red-500' : 'border-gray-200'} focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent`}
+                    />
+                  </div>
+                  {errors.tempatLahir && (
+                    <p className="text-red-500 text-sm mt-1">{errors.tempatLahir}</p>
+                  )}
+                </div>
+
+                <div>
+                  <label className="block text-gray-700 font-bold mb-2">
+                    Tanggal Lahir <span className="text-red-500">*</span>
+                  </label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                      </svg>
+                    </div>
+                    <input 
+                      type="date" 
+                      name="tanggalLahir"
+                      value={formData.tanggalLahir}
+                      onChange={handleChange}
+                      max={new Date().toISOString().split('T')[0]}
+                      className={`w-full pl-12 pr-4 py-3 rounded-xl bg-gray-50 border ${errors.tanggalLahir ? 'border-red-500' : 'border-gray-200'} focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent`}
+                    />
+                  </div>
+                  {errors.tanggalLahir && (
+                    <p className="text-red-500 text-sm mt-1">{errors.tanggalLahir}</p>
+                  )}
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-gray-700 font-bold mb-2">
+                  Agama <span className="text-red-500">*</span>
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5S19.832 5.477 21 6.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                    </svg>
+                  </div>
+                  <select
+                    name="agama"
+                    value={formData.agama}
+                    onChange={handleChange}
+                    className={`w-full pl-12 pr-4 py-3 rounded-xl bg-gray-50 border ${errors.agama ? 'border-red-500' : 'border-gray-200'} focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent appearance-none`}
+                  >
+                    <option value="">Pilih Agama</option>
+                    <option value="Islam">Islam</option>
+                    <option value="Kristen">Kristen</option>
+                    <option value="Katolik">Katolik</option>
+                    <option value="Hindu">Hindu</option>
+                    <option value="Buddha">Buddha</option>
+                    <option value="Konghucu">Konghucu</option>
+                  </select>
+                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                    <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                  </div>
+                </div>
+                {errors.agama && (
+                  <p className="text-red-500 text-sm mt-1">{errors.agama}</p>
+                )}
+              </div>
+
+              <div>
+                <label className="block text-gray-700 font-bold mb-2">
                   Nomor WhatsApp <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
@@ -211,6 +362,30 @@ const RegistrationPage = () => {
                   <p className="text-red-500 text-sm mt-1">{errors.whatsapp}</p>
                 )}
                 <p className="text-gray-500 text-sm mt-1">Format: 812-3456-7890 (tanpa +62)</p>
+              </div>
+
+              <div>
+                <label className="block text-gray-700 font-bold mb-2">
+                  Email Orang Tua <span className="text-red-500">*</span>
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"></path>
+                    </svg>
+                  </div>
+                  <input 
+                    type="email" 
+                    name="email"
+                    placeholder="email@example.com" 
+                    value={formData.email}
+                    onChange={handleChange}
+                    className={`w-full pl-12 pr-4 py-3 rounded-xl bg-gray-50 border ${errors.email ? 'border-red-500' : 'border-gray-200'} focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent`}
+                  />
+                </div>
+                {errors.email && (
+                  <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+                )}
               </div>
 
               <div>

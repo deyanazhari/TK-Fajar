@@ -53,6 +53,34 @@ export const getRegistrations = async () => {
   }
 };
 
+export const deleteRegistration = async (id) => {
+  try {
+    const sessionId = localStorage.getItem('adminSessionId');
+    const response = await api.delete(`/registration/${id}`, {
+      headers: {
+        'X-Session-ID': sessionId
+      }
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const deleteAllRegistrations = async () => {
+  try {
+    const sessionId = localStorage.getItem('adminSessionId');
+    const response = await api.delete('/registration', {
+      headers: {
+        'X-Session-ID': sessionId
+      }
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const adminLogin = async (credentials) => {
   try {
     const response = await api.post('/admin/login', credentials);

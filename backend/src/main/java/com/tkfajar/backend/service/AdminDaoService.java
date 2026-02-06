@@ -23,7 +23,7 @@ public class AdminDaoService {
     private final AdminDao adminDao;
     private final Map<String, Admin> activeSessions = new HashMap<>();
     private final Map<String, LocalDateTime> sessionExpiry = new HashMap<>();
-    private static final long SESSION_TIMEOUT_MINUTES = 20;
+    private static final long SESSION_TIMEOUT_MINUTES = 120;
     
     @Autowired
     public AdminDaoService(AdminDao adminDao) {
@@ -81,7 +81,7 @@ public class AdminDaoService {
         // Create session
         String sessionId = UUID.randomUUID().toString();
         activeSessions.put(sessionId, admin);
-        sessionExpiry.put(sessionId, LocalDateTime.now().plusMinutes(SESSION_TIMEOUT_MINUTES));
+        sessionExpiry.put(sessionId, LocalDateTime.now().plusMinutes(SESSION_TIMEOUT_MINUTES*60));
         
         // Update last login
         adminDao.updateLastLogin(admin.getId(), LocalDateTime.now());
