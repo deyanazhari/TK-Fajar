@@ -5,6 +5,8 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.tkfajar.backend.config.LocalDateDeserializer;
 
 public class RegistrationRequest {
     
@@ -22,7 +24,8 @@ public class RegistrationRequest {
     private String alamat;
     
     @NotNull(message = "Tanggal lahir anak wajib diisi")
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC")
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate tanggalLahir;
 
     public String getParentName() {

@@ -22,7 +22,7 @@ import KegiatanManagePage from './pages/KegiatanManagePage';
 function App() {
   return (
     <AuthProvider>
-      <Router>
+      <Router basename={process.env.PUBLIC_URL}>
         <Routes>
           <Route path="/" element={
             <div className="bg-blue-50 text-gray-800">

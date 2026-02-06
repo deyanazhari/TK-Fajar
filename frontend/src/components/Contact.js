@@ -31,7 +31,7 @@ const Contact = () => {
                     <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                   </svg>
                 </div>
-                <span className="font-bold text-lg">Jl. Fajar No. 12, Jakarta Selatan</span>
+                <span className="font-bold text-lg">Komplek Pemda, Jalan Raya Petir No.33/34 Blok A2, Banjarsari, Kec. Cipocok Jaya, Kota Serang, Banten 42171</span>
               </div>
             </div>
           </div>

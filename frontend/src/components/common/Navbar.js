@@ -1,8 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
 
   return (
     <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur-md shadow-sm">
@@ -32,18 +34,22 @@ const Navbar = () => {
             <button onClick={() => navigate('/kegiatan')} className="hover:text-blue-500 transition cursor-pointer bg-transparent border-none text-gray-600">Kegiatan</button>
           </div>
           <div>
+            {!isAuthenticated && (
             <button 
               onClick={() => navigate('/registration')}
               className="bg-pink-500 hover:bg-pink-600 text-white px-6 py-2 rounded-full font-bold shadow-lg transition transform hover:scale-105 inline-block"
             >
               Daftar Sekarang
             </button>
-            <button 
-              onClick={() => navigate('/admin/login')}
-              className="ml-3 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full font-bold shadow-lg transition transform hover:scale-105 inline-block text-sm"
-            >
-              📊 Admin
-            </button>
+            )}
+            {!isAuthenticated && (
+              <button 
+                onClick={() => navigate('/admin/login')}
+                className="ml-3 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full font-bold shadow-lg transition transform hover:scale-105 inline-block text-sm"
+              >
+                📊 Admin
+              </button>
+            )}
           </div>
         </div>
       </div>

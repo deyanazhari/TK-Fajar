@@ -260,6 +260,7 @@ const RegistrationDataPage = () => {
                             <span className="text-gray-700 font-medium">{formatWhatsApp(registration.whatsapp)}</span>
                           </div>
                         </td>
+                        
                         <td className="px-6 py-4 text-gray-600 text-sm">{formatDate(registration.createdAt)}</td>
                         <td className="px-6 py-4">
                           <code className="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">
