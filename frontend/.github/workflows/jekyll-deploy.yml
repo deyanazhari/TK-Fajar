@@ -1,0 +1,57 @@
+name: Deploy to GitHub Pages with Jekyll
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        cache-dependency-path: package-lock.json
+        
+    - name: Install Node dependencies
+      run: npm ci
+      
+    - name: Build React App
+      run: npm run build
+      env:
+        PUBLIC_URL: /TK-Fajar
+        REACT_APP_GITHUB_PAGES: true
+        
+    - name: Setup Ruby and Jekyll
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.1'
+        bundler-cache: true
+        
+    - name: Install Jekyll dependencies
+      run: |
+        gem install jekyll jekyll-sitemap jekyll-feed jekyll-seo-tag
+        
+    - name: Prepare Jekyll structure
+      run: |
+        mkdir -p _layouts _includes _sass assets/css assets/js assets/images
+        cp -r build/* ./
+        
+    - name: Build with Jekyll
+      run: |
+        JEKYLL_ENV=production jekyll build
+        
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      if: github.ref == 'refs/heads/main'
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./_site
